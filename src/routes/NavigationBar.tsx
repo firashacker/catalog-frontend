@@ -8,6 +8,7 @@ import {
   faBox,
   faCircleUser,
   faSignOut,
+  faBrush,
   //faMoneyBill,
   //faBucket,
 } from "@fortawesome/free-solid-svg-icons";
@@ -62,6 +63,12 @@ const adminNavElements: element[] = [
     icon: faSignOut,
   },
   {
+    id: 10,
+    title: "الخامات",
+    path: "/materials",
+    icon: faBrush,
+  },
+  {
     id: 4,
     title: "الاصناف",
     path: "/categories",
@@ -73,6 +80,7 @@ const adminNavElements: element[] = [
     path: "/products",
     icon: faBox,
   },
+
   /*  {
     id: 5,
     title: "كشف مبيعات",

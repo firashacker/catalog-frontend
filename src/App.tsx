@@ -6,7 +6,8 @@ import Categories from "./routes/Categories";
 import Login from "./routes/Login";
 import Logout from "./routes/Logout";
 import Cart from "./routes/Cart";
-
+import Materials from "./routes/Materials";
+import MaterialUpload from "./routes/Materials.upload";
 import ProductUpload from "./routes/Products.upload";
 
 function App() {
@@ -23,6 +24,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/upload" element={<ProductUpload />} />
+            <Route path="/materials" element={<Materials />} />
+            <Route path="/materials/upload" element={<MaterialUpload />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />

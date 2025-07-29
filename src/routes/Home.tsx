@@ -1,7 +1,7 @@
 import { useProducts, type Product } from "../store/Products/products";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faCheck, faList } from "@fortawesome/free-solid-svg-icons";
+import { faList } from "@fortawesome/free-solid-svg-icons";
 import { useCartStore } from "../store/Cart/cart";
 import ProductsList from "../components/ProductsList/ProductsList.component";
 import CartPopUp from "../components/CartPopUp/CartPopUp.component";
@@ -82,23 +82,16 @@ function Home() {
         </ul>
       )}
       <div className="fixed flex space-x-6 bottom-12 z-99">
-        <button
-          className="bg-red-100 hover:bg-red-300 rounded-full min-w-12 min-h-12 xl:min-w-16 xl:min-h-16 border-red-300 border-2"
-          onClick={handleDelete}
-        >
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </button>
+        <Button buttonStyle="danger" onButtonClick={handleDelete}>
+          Cancel
+        </Button>
+
         <Link to="/cart">
-          <button className="bg-blue-300 hover:bg-green-300 rounded-full min-w-12 min-h-12 xl:min-w-16 xl:min-h-16 border-green-300 border-2">
-            <FontAwesomeIcon icon={faCheck} />
-          </button>
+          <Button buttonStyle="base">Generate</Button>
         </Link>
-        <button
-          className="bg-yellow-50 hover:bg-orange-300 rounded-full min-w-12 min-h-12 xl:min-w-16 xl:min-h-16 border-yellow-300 border-2"
-          onClick={() => setShowCart(!showCart)}
-        >
+        <Button buttonStyle="base" onButtonClick={() => setShowCart(!showCart)}>
           <FontAwesomeIcon icon={faList} />
-        </button>
+        </Button>
       </div>
       {productsList?.map && <ProductsList products={productsList} />}
     </main>

@@ -1,13 +1,5 @@
 import ProductCard from "../ProductCard/ProductCard.component";
-
-interface ProductType {
-  id: number;
-  title: string;
-  image: string;
-  description: string;
-  price: number;
-  categoriesId: number;
-}
+import { type Product as ProductType } from "../../store/Products/products";
 
 interface ListOptions {
   children?: React.ReactNode | string;

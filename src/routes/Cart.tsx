@@ -40,8 +40,8 @@ const Cart = () => {
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th className="px-6 py-3">Image</th>
+                  <th className="px-6 py-3">Color</th>
                   <th className="px-6 py-3">Name</th>
-                  <th className="px-6 py-3">description</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,18 +53,19 @@ const Cart = () => {
                     >
                       <th className="p-1 font-medium text-gray-900 whitespace-nowrap dark:text-white  border-black border-2 w-1/2">
                         <img
-                          className="min-w-full"
+                          className="min-w-full "
                           src={BaseUrl + cartItem.image}
+                        />
+                      </th>
+                      <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  border-black border-2 w-1/4">
+                        <img
+                          className="object-center rounded-md"
+                          src={BaseUrl + cartItem.materialImage}
                         />
                       </th>
                       <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  border-black border-2 w-1/4">
                         <p className="break-words text-wrap">
                           {cartItem.title}
-                        </p>
-                      </th>
-                      <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white  border-black border-2 w-1/4">
-                        <p className="break-words text-wrap">
-                          {cartItem.description}
                         </p>
                       </th>
                     </tr>

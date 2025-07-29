@@ -1,7 +1,16 @@
 import { create } from "zustand";
 import apiInstance from "../../lib/axios";
+import { type Material } from "../Materials/materials";
 
 // Define the interface of the Products state
+
+export interface ProductsMaterials {
+  id: number;
+  productId: number;
+  materialId: number;
+  material: Material;
+}
+
 export interface Product {
   id: number;
   title: string;
@@ -9,6 +18,7 @@ export interface Product {
   price: number;
   image: string;
   categoriesId: number;
+  ProductsMaterials: ProductsMaterials[];
 }
 
 interface State {

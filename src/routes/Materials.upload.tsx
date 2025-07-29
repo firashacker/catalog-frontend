@@ -1,41 +1,13 @@
-import { useState, useEffect } from "react";
-import { useCategories } from "../store/Categories/categories";
-import { useMaterials, type Material } from "../store/Materials/materials";
+import { useState } from "react";
 import apiInstance from "../lib/axios";
 import Button from "../components/Button/Button.component";
 import FormInput from "../components/FormInput/FormInput.component";
 import imageCompression from "browser-image-compression";
-import { BaseUrl } from "../lib/axios";
 
-const ProductUpload = () => {
+const MaterialUpload = () => {
   const [image, setImage] = useState<File | Blob>();
   const [title, setTitle] = useState<string>();
-  //const [description, setDescription] = useState<string>();
-  const { categories, fetchCategories } = useCategories((state) => state);
-  const { materials, fetchMaterials } = useMaterials((state) => state);
-  const [productMaterials, setProductMaterials] = useState<Material[]>([]);
-  const [category, setCategory] = useState<number>();
   const [clicked, setclicked] = useState(false);
-
-  useEffect(() => {
-    fetchCategories();
-    fetchMaterials();
-  }, []);
-
-  const HandleMaterialsChange = (id: number) => {
-    const exsists = productMaterials.filter((material) => material.id === id);
-
-    if (exsists.length > 0) {
-      const newMaterials = productMaterials.filter(
-        (material) => material.id != exsists[0].id,
-      );
-      setProductMaterials(newMaterials);
-    } else {
-      const newMaterial = materials.filter((material) => material.id === id);
-      setProductMaterials([...productMaterials, newMaterial[0]]);
-    }
-    console.log(productMaterials);
-  };
 
   const HandleFileChange = async (event: any) => {
     const file = event.target.files[0];
@@ -67,31 +39,10 @@ const ProductUpload = () => {
     }
   };
 
-  const ShowMaterials = () => {
-    return materials.map((material) => {
-      const clicked = productMaterials.filter((m) => m.id === material.id);
-      return (
-        <button
-          key={material.id}
-          className={`${clicked.length > 0 ? "bg-green-400" : ""} rounded-full p-2 m-2`}
-          onClick={() => {
-            HandleMaterialsChange(material.id);
-          }}
-        >
-          <img
-            className="w-20 rounded-full h-20 border-s-slate-950 border-2"
-            src={BaseUrl + material.image}
-          />
-        </button>
-      );
-    });
-  };
-
   const ShowUpload = () => {
     if (clicked) return;
     if (!image) return;
     if (!title) return;
-    if (!category) return;
     return (
       <Button
         buttonStyle="baseFullW"
@@ -114,26 +65,16 @@ const ProductUpload = () => {
       return null;
     }
 
-    if (!category) {
-      alert("please Choose a category !");
-      return null;
-    }
-
     setclicked(true);
     try {
       const res1 = await apiInstance.postForm("/api/image", { image: image });
       console.log("res1: " + `/images/${res1.data.filename}`);
-      const res2 = await apiInstance.post("/api/products", {
-        product: {
-          title: title,
-          //description: description,
-          image: `/images/${res1.data.filename}`,
-          categoriesId: category,
-        },
-        materials: productMaterials,
+      const res2 = await apiInstance.post("/api/materials", {
+        title: title,
+        //description: description,
+        image: `/images/${res1.data.filename}`,
       });
       console.log(res2);
-
       window.location.reload();
     } catch (error) {
       alert(error);
@@ -196,45 +137,9 @@ const ProductUpload = () => {
         />
       </div>*/}
 
-      <div className="mb-5">
-        <label
-          htmlFor="sections"
-          className="block text-sm font-medium text-gray-700 mb-2"
-        >
-          Select Category
-        </label>
-        <select
-          onChange={(event) => {
-            setCategory(Number(event.target.value));
-            //console.log(event.target.value);
-          }}
-          id="sections"
-          className="border-gray border-2 w-full px-4 py-3 rounded-lg border-gray-200 bg-white shadow-sm appearance-none focus:border-blue-500 outline-none focus:ring-2 ring-blue-500"
-        >
-          <option key="default" value="">
-            Choose Category
-          </option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="mb-5">
-        <label
-          htmlFor="sections"
-          className="block text-sm font-medium text-gray-700 mb-2"
-        >
-          Select Materials
-        </label>
-
-        <ShowMaterials />
-      </div>
       <ShowUpload />
     </div>
   );
 };
 
-export default ProductUpload;
+export default MaterialUpload;

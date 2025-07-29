@@ -3,6 +3,7 @@ import { create } from "zustand";
 //import { createJSONStorage } from "zustand/middleware";
 
 // Define the interface of the Cart state
+
 export interface Product {
   id: number;
   title: string;
@@ -10,6 +11,7 @@ export interface Product {
   price: number;
   image: string;
   categoriesId: number;
+  materialImage?: string;
 }
 
 interface State {

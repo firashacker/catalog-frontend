@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
 import { useCartStore } from "../../store/Cart/cart";
 import { BaseUrl } from "../../lib/axios";
-
-interface ProductType {
-  id: number;
-  title: string;
-  image: string;
-  description: string;
-  price: number;
-  categoriesId: number;
-}
+import { type Product as ProductType } from "../../store/Products/products";
+import { type Material } from "../../store/Materials/materials";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBrush } from "@fortawesome/free-solid-svg-icons";
 
 interface CardOptions {
   children?: React.ReactNode | string;
@@ -27,15 +22,49 @@ const ProductCard = ({
 }: CardOptions) => {
   const { addToCart, deleteFromCart, cart } = useCartStore((state) => state);
   const [selected, setSelected] = useState(false);
+  const [material, setMaterial] = useState<Material>(
+    product.ProductsMaterials[0]?.material,
+  );
+
+  const ShowMaterials = () => {
+    const materials = product.ProductsMaterials;
+    return materials.map((productmaterial) => {
+      const clicked = productmaterial.material.id === material.id;
+      return (
+        <button
+          key={productmaterial.id}
+          className={`${clicked ? "bg-red-400" : ""} rounded-full p-[5px] m-2`}
+          onClick={() => {
+            deleteFromCart(product);
+            setMaterial(productmaterial.material);
+          }}
+        >
+          <img
+            className="w-12 rounded-full h-12 border-s-slate-950 border-2"
+            src={BaseUrl + productmaterial.material.image}
+          />
+        </button>
+      );
+    });
+  };
 
   const HandleClicked = () => {
     if (selected) {
       deleteFromCart(product);
       setSelected(!selected);
     } else {
-      addToCart(product);
+      if (material) {
+        addToCart({
+          ...product,
+          materialImage: material.image,
+        });
+      } else {
+        addToCart(product);
+      }
+
       setSelected(!selected);
     }
+    //console.log(cart);
   };
   useEffect(() => {
     const Item = cart.filter((item) => item.id === product.id)[0];
@@ -63,6 +92,18 @@ const ProductCard = ({
           </p>
         </div>
       </div>
+      {product.ProductsMaterials.length > 0 ? (
+        <div>
+          <h1 className="font-semibold text-xl">
+            finish <FontAwesomeIcon icon={faBrush} />
+          </h1>
+          <div className="min-w-full flex justify-start flex-wrap">
+            <ShowMaterials />
+          </div>
+        </div>
+      ) : (
+        <div className="min-h-full" onClick={HandleClicked}></div>
+      )}
       {/*selected ? (
         <div className="flex justify-around">
           <div

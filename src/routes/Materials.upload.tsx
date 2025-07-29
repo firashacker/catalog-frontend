@@ -17,8 +17,8 @@ const MaterialUpload = () => {
       console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
 
       const options = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 1080,
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 720,
         useWebWorker: true,
       };
       try {

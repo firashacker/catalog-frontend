@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo from "../../public/Caravan.svg";
 import {
   //faBoxesPacking,
   faStore,
@@ -132,9 +133,10 @@ function Navbar() {
           {/* Logo */}
           <Link
             to="/"
-            className="text-xl font-bold text-gray-800 hover:text-purple-700 transition-colors duration-200"
+            className="text-xl font-bold text-gray-800 hover:text-purple-700 transition-colors duration-200 flex"
           >
-            {import.meta.env.VITE_SELLPOINT}
+            <img src={Logo} className="max-h-15" />
+            <h1 className="pt-4">{import.meta.env.VITE_SELLPOINT}</h1>
           </Link>
 
           {/* Desktop Navigation Items - hidden on small screens */}
